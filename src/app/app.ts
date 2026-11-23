@@ -35,7 +35,7 @@ export class App {
   // Lee los contactos de public/contactos.json y los guarda en el signal
   async cargar() {
     try {
-      const respuesta = await fetch('/contactos.json');
+      const respuesta = await fetch('contactos.json');
       const datos: Contacto[] = await respuesta.json();
       this.contactos.set(datos);
     } catch (error) {
