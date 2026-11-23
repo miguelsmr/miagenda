@@ -1,0 +1,44 @@
+<nav class="navbar navbar-dark bg-dark mb-4">
+  <div class="container">
+    <span class="navbar-brand">MiAgenda</span>
+    <span class="navbar-text">Favoritos ({{ numFavoritos() }})</span>
+  </div>
+</nav>
+
+<main class="container pb-5">
+
+  <div class="mb-2">
+    <input #caja type="search" class="form-control" placeholder="Buscar por nombre" aria-label="Buscar por nombre"
+      (input)="busqueda.set(caja.value)">
+  </div>
+  <p class="text-muted">Mostrando {{ filtrados().length }} de {{ contactos().length }}</p>
+
+  <div class="row g-3">
+
+    @for (c of filtrados(); track c.id) {
+      <div class="col-12 col-md-6 col-lg-4">
+        <article class="card h-100">
+          <div class="card-body d-flex gap-3">
+            <div class="avatar">{{ iniciales(c.nombre) }}</div>
+            <div class="flex-grow-1">
+              <h2 class="h5 mb-1">{{ c.nombre }}</h2>
+              <span class="badge text-bg-secondary">{{ c.grupo }}</span>
+              <p class="mb-0 mt-2">{{ c.telefono }}</p>
+              <a class="small" [href]="'mailto:' + c.email">{{ c.email }}</a>
+            </div>
+            <button type="button" class="btn btn-link estrella" aria-label="Favorito" (click)="cambiarFavorito(c.id)">
+              @if (c.favorito) {
+                ★
+              } @else {
+                ☆
+              }
+            </button>
+          </div>
+        </article>
+      </div>
+    } @empty {
+      <p class="col-12 text-muted">Ningún contacto coincide</p>
+    }
+
+  </div>
+</main>
